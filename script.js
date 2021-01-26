@@ -1,12 +1,13 @@
 const testWrapper = document.querySelector(".test-wrapper");
 const testArea = document.querySelector("#test-area");
-const originText = document.querySelector("#origin-text p").innerHTML;
 const resetButton = document.querySelector("#reset");
 const theTimer = document.querySelector(".timer");
+var originText = document.querySelector("#origin-text p");
 
 var timer = [0,0,0];
 var interval;
 var timerRunning = false;
+
 // Add leading zero to numbers 9 or below (purely for aesthetics):
 function leadingZero(time) {
     if (time <= 9) {
@@ -35,7 +36,7 @@ function runTimer() {
 // Match the text entered with the provided text on the page:
 function spellCheck() {
     let textEntered = testArea.value;
-    let originTextMatch = originText.substring(0, textEntered.length);
+    let originTextMatch = originText.innerHTML.substring(0, textEntered.length);
 
     if (textEntered == originText) {
         testWrapper.style.borderColor = "#429890";
@@ -69,6 +70,19 @@ function reset() {
     theTimer.innerHTML = "00:00:00";
     testWrapper.style.borderColor = "grey";
 };
+
+function editText() {
+    //Reset the test area
+    clearInterval(interval);
+    timerRunning = false;
+    timer = [0,0,0];
+
+    testArea.value = "";
+    theTimer.innerHTML = "00:00:00";
+    testWrapper.style.borderColor = "grey";
+
+    originText.innerHTML = prompt("Enter new string.", "Enter new string to test");
+}
 
 // Event listeners for keyboard input and the reset button:
 testArea.addEventListener("keypress", start, false);
