@@ -108,11 +108,19 @@ body {
     margin: 0;
     padding: 0;
 }
+.btn {
+    float: right;
+    margin-right: 5px;
+}
 
 .masthead {
     padding: 1em 2em;
     background-color: #0D1B2E;
     color: white;
+}
+
+.hidden {
+    display: none;
 }
 
 .masthead h1 {
