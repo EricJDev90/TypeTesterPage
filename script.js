@@ -2,11 +2,13 @@ const testWrapper = document.querySelector(".test-wrapper");
 const testArea = document.querySelector("#test-area");
 const resetButton = document.querySelector("#reset");
 const theTimer = document.querySelector(".timer");
-var originText = document.querySelector("#origin-text p");
+const originText = document.querySelector("#origin-text textarea");
+const acceptbutton = document.querySelector(".acceptbtn");
 
 var timer = [0,0,0];
 var interval;
 var timerRunning = false;
+originText.readOnly = true;
 
 // Add leading zero to numbers 9 or below (purely for aesthetics):
 function leadingZero(time) {
@@ -36,9 +38,9 @@ function runTimer() {
 // Match the text entered with the provided text on the page:
 function spellCheck() {
     let textEntered = testArea.value;
-    let originTextMatch = originText.innerHTML.substring(0, textEntered.length);
+    let originTextMatch = originText.value.substring(0, textEntered.length);
 
-    if (textEntered == originText) {
+    if (textEntered == originText.value) {
         testWrapper.style.borderColor = "#429890";
         clearInterval(interval);
     } else {
@@ -53,7 +55,7 @@ function spellCheck() {
 // Start the timer:
 function start() {
     let textEnteredLength = testArea.value.length;
-    if (textEnteredLength === 0 && !timerRunning) {
+    if (textEnteredLength === 0 && !timerRunning && originText.readOnly == true ) {
         timerRunning = true;
         interval = setInterval(runTimer, 10);
     }
@@ -81,7 +83,15 @@ function editText() {
     theTimer.innerHTML = "00:00:00";
     testWrapper.style.borderColor = "grey";
 
-    originText.innerHTML = prompt("Enter new string.", "Enter new string to test");
+    acceptbutton.classList.remove("hidden")
+    originText.readOnly = false;
+    testArea.readOnly = true;
+}
+
+function acceptBtnPressed() {
+    acceptbutton.classList.add("hidden");
+    originText.readOnly = true;
+    testArea.readOnly = false;
 }
 
 // Event listeners for keyboard input and the reset button:
